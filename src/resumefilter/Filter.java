@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package resumefilter;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.util.List;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -15,8 +11,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,8 +19,11 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.border.TitledBorder;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
@@ -36,19 +33,23 @@ import org.apache.pdfbox.text.PDFTextStripper;
  */
 public class Filter extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Fitler
-     */
+    String filterdLocation = "D:\\BAHL Projects\\Filtered";
+    List<String> allFolders = new ArrayList<String>();
+    DefaultListModel<FolderItem> model = new DefaultListModel<FolderItem>();
+
+///
     public Filter() {
         initComponents();
+        getContentPane().requestFocusInWindow();
         getContentPane().setBackground(Color.white);
-
+        foundLocationField.setText(filterdLocation);
     }
 
-    public static List<String> findFiles(Path path, String[] fileExtensions) throws IOException {
+    public List<String> findFiles(Path path, String[] fileExtensions) throws IOException {
 
         if (!Files.isDirectory(path)) {
-            throw new IllegalArgumentException("Path must be a directory!");
+            message("Resume Directory", "Invalid Directory!");
+            throw new IllegalArgumentException("Invalid Directory");
         }
 
         List<String> result;
@@ -128,20 +129,33 @@ public class Filter extends javax.swing.JFrame {
         matchAnyBox = new javax.swing.JCheckBox();
         label2 = new javax.swing.JLabel();
         machesFoundLabel = new javax.swing.JLabel();
-        label3 = new javax.swing.JLabel();
         expComboBox = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         foundLocationField = new javax.swing.JTextField();
         editfoundLocationField = new javax.swing.JLabel();
+        label4 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        foldersList = new javax.swing.JList<>();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jPanel1.setBorder(BorderFactory.createTitledBorder(null, "", TitledBorder.CENTER, TitledBorder.BOTTOM, new Font("times new roman",Font.PLAIN,12), Color.yellow));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
 
+        languageField.setForeground(new java.awt.Color(153, 153, 153));
+        languageField.setText("i.e Java, Docker");
+        languageField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                languageFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                languageFieldFocusLost(evt);
+            }
+        });
         languageField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 languageFieldActionPerformed(evt);
@@ -191,6 +205,8 @@ public class Filter extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jButton1.setText("Filter");
+        jButton1.setAlignmentY(0.0F);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -204,11 +220,9 @@ public class Filter extends javax.swing.JFrame {
         label2.setText("Matches Found");
 
         machesFoundLabel.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
+        machesFoundLabel.setForeground(new java.awt.Color(102, 102, 102));
         machesFoundLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         machesFoundLabel.setText("-");
-
-        label3.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        label3.setText("Location :");
 
         expComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 yrs", "1.5 yrs", "2 yrs", "2.5 yrs", "3 yrs", "3.5 yrs", "4 yrs", "4.5 yrs", "5 yrs", "5.5 yrs", "6 yrs", "6.5 yrs", "7 yrs", "7.5 yrs", "8 yrs", "8.5 yrs", "9 yrs", "9.5", "10 yrs", " " }));
 
@@ -216,6 +230,8 @@ public class Filter extends javax.swing.JFrame {
         jLabel6.setText("Experience");
 
         foundLocationField.setEditable(false);
+        foundLocationField.setText("D:\\BAHL Projects\\Resume 2022");
+        foundLocationField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
 
         editfoundLocationField.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/edit-53-32.png"))); // NOI18N
         editfoundLocationField.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -224,6 +240,31 @@ public class Filter extends javax.swing.JFrame {
             }
         });
 
+        label4.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        label4.setText("Location");
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+
+        jScrollPane2.setViewportView(foldersList);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -231,6 +272,9 @@ public class Filter extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(resumeLocation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(238, 238, 238))
@@ -271,11 +315,12 @@ public class Filter extends javax.swing.JFrame {
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(63, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(label3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(foundLocationField, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(editfoundLocationField, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(foundLocationField, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(editfoundLocationField, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -300,24 +345,24 @@ public class Filter extends javax.swing.JFrame {
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(expComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(matchAnyBox)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(matchAnyBox)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(35, 35, 35)
-                        .addComponent(machesFoundLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(label3))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(editfoundLocationField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(foundLocationField))))
-                .addGap(0, 25, Short.MAX_VALUE))
+                        .addComponent(machesFoundLabel)))
+                .addGap(29, 29, 29)
+                .addComponent(label4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(editfoundLocationField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(foundLocationField, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 0));
@@ -351,15 +396,15 @@ public class Filter extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -395,7 +440,7 @@ public class Filter extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String lang = languageField.getText();
             System.out.println("#" + lang);
-            if (lang.trim().length() > 0) {
+            if (lang.trim().length() > 0 && !languesList.getText().toLowerCase().contains(lang.trim().toLowerCase())) {
                 languesList.setText(new StringBuffer(languesList.getText()).append(lang).append(", ").toString());
                 languageField.setText("");
             }
@@ -406,116 +451,121 @@ public class Filter extends javax.swing.JFrame {
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         languesList.setText("");
+        languageField.setText("i.e Java, Docker");
+        languageField.setForeground(new Color(153, 153, 153));
+        langFieldFlag = true;
+        getContentPane().requestFocusInWindow();
+
+
     }//GEN-LAST:event_jLabel7MouseClicked
 
     public Map<String, Boolean> getList(String list[]) {
         Map<String, Boolean> map = new HashMap<String, Boolean>();
         for (String l : list) {
-            map.put(l, false);
+            map.put(l, true);
         }
         return map;
     }
 
     int matchesFound = 0;
-    File directory;
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         matchesFound = 0;
         String location = resumeLocation.getText();
         String languages = languesList.getText().trim().toLowerCase();
         String langList[] = languages.length() > 0 ? languages.split(",") : null;
+        boolean matchAny = matchAnyBox.isSelected();
+        Map<String, String> filesToMove = new HashMap();
+        int count = 0;
         if (!location.isEmpty()) {
             if (langList != null && langList.length > 0) {
                 try {
                     String[] extensions = {"pdf", "docx", "doc"};
                     List<String> files = findFiles(Paths.get(location), extensions);
                     files.forEach(x -> {
-                        System.out.println("Resume: " + x);
                         try {
+//                            System.out.println("Resume: " + x);
+                            Map<String, Boolean> langMap = getList(langList);
                             PDDocument doc = PDDocument.load(new File(x));
                             String data = new PDFTextStripper().getText(doc);
-
-                            boolean flag = true;
-                            boolean matchAny = matchAnyBox.isSelected();
-                            List matchAnyFolder = new ArrayList();
-                            for (String keyword : langList) {
-
-                                System.out.println("Keyword: " + keyword);
-
-//                                if (!data.toLowerCase().contains(keyword)) {
-//                                    flag = false;
-//                                }
-                                System.out.println(data);
-                                if (isKeywordFound(data, keyword)) {
-                                    System.out.println("MATCH Found");
-                                    flag = false;
-                                } else {
-                                    System.out.println("Not found");
+                            for (Map.Entry entry : langMap.entrySet()) {
+                                System.out.println("Word: " + entry.getKey().toString());
+                                if (!isKeywordFound(data.replaceAll("[\r\n]+", " "), entry.getKey().toString())) {
+                                    System.out.println("not found");
+                                    entry.setValue(Boolean.FALSE);
                                 }
-
-                                if (matchAny) {
-                                    matchAnyFolder.add(keyword);
-
-                                }
-                                System.out.println("keyword : " + keyword);
-                                System.out.println("keyword : " + keyword.length());
                             }
 
                             doc.close();
 
-                            System.out.println("flag : " + flag);
-                            if (flag || matchAny) {
-                                System.out.println("File to move: " + x);
-                                Arrays.sort(langList);
-                                String folderName = String.join("-", Arrays.asList(langList));
-                                if (matchAny) {
-                                    Collections.sort(matchAnyFolder);
-                                    folderName = String.join("-", matchAnyFolder);
+//                            System.out.println("File to move: " + x);
+                            System.out.println(langMap);
+                            List<String> langKeys = langMap.entrySet().stream().filter(Map.Entry::getValue).map(Map.Entry::getKey).collect(Collectors.toList());
 
-                                }
-                                directory = new File("D:\\BAHL Projects\\Filtered\\" + folderName);
-                                System.out.println("dir " + directory);
-                                if (!directory.exists()) {
-                                    directory.mkdirs();
-                                    System.out.println("created");
-                                }
-
-                                // Files.move(Paths.get(x), Paths.get(directory + "\\" + new File(x).getName()), StandardCopyOption.REPLACE_EXISTING);
-                                matchesFound++;
+                            if (langKeys.size() > 0) {
+                                Collections.sort(langKeys);
+                                String folderName = String.join("-", langKeys);
+                                filesToMove.put(x, folderName);
+                                allFolders.add(folderName);
+                                System.out.println(langKeys);
                             }
+
                         } catch (IOException ex) {
-                            ex.printStackTrace();
+                            Logger.getLogger(Filter.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
                     });
 
-                    machesFoundLabel.setText("" + matchesFound);
-
-                    if (matchesFound > 0) {
-                        foundLocationField.setText(directory.getAbsolutePath());
-                        machesFoundLabel.setForeground(Color.black);
-
-                    } else {
-                        System.out.println("No any matches found");
-                        foundLocationField.setText("");
-                        machesFoundLabel.setForeground(Color.RED);
-                        message("Matches", "No any math found!");
-
+                    for (String loc : allFolders) {
+                        model.addElement(new FolderItem(0, foundLocationField.getText() + "\\" + loc));
                     }
 
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    foldersList.setModel(model);
+
+                } catch (IOException ex) {
+                    Logger.getLogger(Filter.class.getName()).log(Level.SEVERE, null, ex);
                 }
+
             } else {
-                message("Resume Lang & Tools", "Please enter Languages  or Tools first");
+                message("Resume Lang & Tools", "Please enter Languages or Tools first");
 
             }
+        } else {
+            message("Resume Location", "Invalid Resume directory");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    public String mkDir(String folderName) {
+        File directory = new File(foundLocationField.getText() + "\\" + folderName);
+        if (!directory.exists()) {
+            directory.mkdirs();
+            System.out.println("Folder Created\n" + directory.getAbsolutePath());
+        }
+        return directory.getAbsolutePath();
+    }
+
+    public void moveFiles(Map<String, String> files, boolean matchAny, String langList) throws IOException {
+        int counter = 0;
+        for (Map.Entry entry : files.entrySet()) {
+            String filePath = mkDir(entry.getValue().toString());
+            if (matchAny) {
+                Files.move(Paths.get(entry.getKey().toString()), Paths.get(filePath + "\\" + new File(entry.getKey().toString()).getName()), StandardCopyOption.REPLACE_EXISTING);
+                counter++;
+            } else if (langList.length() == entry.getValue().toString().split("-").length) {
+                Files.move(Paths.get(entry.getKey().toString()), Paths.get(filePath + "\\" + new File(entry.getKey().toString()).getName()), StandardCopyOption.REPLACE_EXISTING);
+                counter++;
+            }
+        }
+    }
+
     public boolean isKeywordFound(String text, String word) {
+        System.out.println("#Word: " + word);
+        System.out.println("#Text: " + text);
         String REGEX_FIND_WORD = "(?i).*?\\b%s\\b.*?";
         String regex = String.format(REGEX_FIND_WORD, Pattern.quote(word));
-        return text.matches(regex);
+        boolean b = text.matches(regex);
+        System.out.println("-------------------");
+        System.out.println(b);
+        return b;
     }
 
 
@@ -533,6 +583,27 @@ public class Filter extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_editfoundLocationFieldMouseClicked
+
+    boolean langFieldFlag = true;
+    private void languageFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_languageFieldFocusGained
+        if (langFieldFlag) {
+            languageField.setText("");
+            languageField.setForeground(Color.black);
+            langFieldFlag = false;
+        }
+
+    }//GEN-LAST:event_languageFieldFocusGained
+
+    private void languageFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_languageFieldFocusLost
+        if (languageField.getText().isEmpty()) {
+
+            languageField.setText("i.e Java, Docker");
+            languageField.setForeground(new Color(153, 153, 153));
+            langFieldFlag = true;
+            getContentPane().requestFocusInWindow();
+    }//GEN-LAST:event_languageFieldFocusLost
+
+    }
 
     public void message(String title, String message) {
         JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
@@ -585,6 +656,7 @@ public class Filter extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel editfoundLocationField;
     private javax.swing.JComboBox<String> expComboBox;
+    private javax.swing.JList<FolderItem> foldersList;
     private javax.swing.JTextField foundLocationField;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel3;
@@ -594,10 +666,12 @@ public class Filter extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel label1;
     private javax.swing.JLabel label2;
-    private javax.swing.JLabel label3;
+    private javax.swing.JLabel label4;
     private javax.swing.JTextField languageField;
     private javax.swing.JTextArea languesList;
     private javax.swing.JLabel machesFoundLabel;

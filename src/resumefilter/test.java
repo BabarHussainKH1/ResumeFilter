@@ -5,8 +5,13 @@
  */
 package resumefilter;
 
-import java.util.regex.Matcher;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -46,182 +51,50 @@ public class test {
 //        }
 
         System.out.println("running..");
-        String text = "Q A I S E R K H A N  Front End Developer Co- Founder/ CMO of Team ALIF     qaiserkhattak1999@gmail.com 03049731678   Taxila SKILLS   Html5, CSS3 Bootstrap4  Adobe Tools Graphic Designing Email Marketing SEO UI/UX Social media content creation Flutter System analysis and design PROJECTS   FundPak (Android/IOS) Hotel management (C++) Attendance Management System (Java & Database)   Taka-Tak pizza Website  Digital Image Processing E- Health Care Quiz App(Android)  OBJECTIVE   I personally believe that nothing is impossible in this world. We just have to put efforts in right way. I am Email Marketing expert with Frontend website and app developer with some work experience in UI/UX, website and application design and development looking for a role as Marketing Specialist or front-end developer to leverage my knowledge and experience. My aim is to seek a suitable position in reputed Organization to enhance and utilize my knowledge and skills in order to cope with the challenges of the industry. EXPERIENCE   FRONT END WEB DEVELOPER MISTIQUBE / MAY 2020 – August 2020 • Worked as a web developer and used Html, CSS and Bootstrap to work on organization’s website. • Designed forms, pages and completed every task given to me by senior developers.    Email Marketing and Campaign Management FIVERR / March 2019 – 2021 • Worked in the field of Email Marketing and Campaigns Management on fiverr. I am almost level 2 seller and still going, providing my services to different organizations. Overall, I have 5-star ratings from more than 100 international buyers. • Used Mailchimp, Klaviyo, Send in Blue, Constant Contact, Active Campaign, and other email marketing tools for my work. • Working in the field for 3 years know I have great knowledge about the Digital Marketing, SEO and how to run campaigns and make Email Templates. It is one my strongest area to work. • My main goal has always been the satisfaction of my clients. You can visit my profile to have a look at my work. Link: https://www.fiverr.com/users/web_dvlpr/seller_dashboard Username: Web_Dvlr                                                             SOCIAL MEDIA CONTENT CREATION MULTIINSIGHT / January 2021 – March 2021 • Did my internship in Graphic designing and social media content creation at MultiInsight, Islamabad • I do have the certificate and the heads of this organization were very happy with my performance.  CERTIFICATIONS  Gold Medal For scoring good marks in matric Silver Medal For scoring good marks in FSC Photoshop Certificate For attending photoshop workshop in university Certificate of Appreciation Organizer and Manager of university event - TECHSALVO  Scholarship Certificates 5th, 8th, matric and FSc scholarships QUIZ Competition Certificate College level winner  Presentation Competition Certificate College level winner Speech Competition Certificate College level winner   Graphics Training Certificate DigiSkillls (Virtual University) Creative Writing Certificate DigiSkillls (Virtual University) Freelancing Certificate DigiSkillls (Virtual University) Html-CSS Certificate Udemy  SOFTWARES   Android Studio Visual Studio Adobe Tools Star UML Eclipse Brackets FLUTTER DEVELOPER • Did online work as a frontend app developer creating many projects and learning at the same time. Used flutter to work on developing my Final Year Project.  • Made Android and IOS app of FYP. • Designed certain screens and did changings regarding modifications in the GUI of existing app.  EDUCATION    BS (Hons.) Software Engineering Oct 2017 – July 2021  UNIVERSITY OF ENGINEERING AND TECHNOLOGY, TAXILA, PAKISTAN CGPA: 3.21 / 4.00 (81%)  Specialized in Email Marketing, Front End web development,UI/UX development with knowledge of desktop application development. Actively participated in team projects to create real-world applications. Served as an active member for development of final year project of a Crowd Funding Platform web and mobile application. Acted as IT Head of a society named SoftDesk from 2020 to 2021.  Intermediate (Pre-Engineering) Sept 2015 – Sept 2017  SUPERIOR COLLEGE FOR GIRLS, GUJAR KHAN, PAKISTAN Marks: 963 / 1100 (87.54%)  Studies focused in engineering subjects such as Mathematics, Algebra, Physics and Chemistry. Learned basic concepts and applied these concepts to practical issues.  Matriculation (Science) Apr 2013 – July 2015  Army Public School and College (APSACS), MULTAN, PAKISTAN Marks: 933 / 1100 (89%)  Studies focused in Science subjects such as Mathematics, Physics, Chemistry and Biology. Learned basic concepts and their real-life applications.  FINAL YEAR PROJECT    FUNDPAK (Pakistan’s First Crowd Funding App) Android, IOS & WEB App • Developed an application using flutter and firebase for the entrepreneurs and small businesspersons. • This project is initialized to help people to engulf the bridge b/w entrepreneurs and the investors of Pakistan. • Followed agile devlp life cycle and perform all testing               ";
-			text ="Q A I S E R" + 
-					" K H A N " + 
-					" " + 
-					"Front End Developer " + 
-					"Co- Founder/ CMO of Team ALIF " + 
-					" " + 
-					" " + 
-					" " + 
-					" qaiserkhattak1999@gmail.com" + 
-					" 03049731678 " + 
-					"  Taxila " + 
-					"SKILLS " + 
-					" " + 
-					" " + 
-					"Html5, CSS3 " + 
-					"Bootstrap4  " + 
-					"Adobe Tools " + 
-					"Graphic Designing " + 
-					"Email Marketing " + 
-					"SEO " + 
-					"UI/UX " + 
-					"Social media content creation " + 
-					"Flutter " + 
-					"System analysis and design " + 
-					"PROJECTS " + 
-					" " + 
-					" " + 
-					"FundPak (Android/IOS) " + 
-					"Hotel management (C++) " + 
-					"Attendance Management " + 
-					"System (Java & Database)   " + 
-					"Taka-Tak pizza Website  " + 
-					"Digital Image Processing " + 
-					"E- Health Care " + 
-					"Quiz App(Android) " + 
-					" " + 
-					"OBJECTIVE " + 
-					" " + 
-					" " + 
-					"I personally believe that nothing is impossible in this world. We just have to " + 
-					"put efforts in right way. I am Email Marketing expert with Frontend website " + 
-					"and app developer with some work experience in UI/UX, website and " + 
-					"application design and development looking for a role as Marketing " + 
-					"Specialist or front-end developer to leverage my knowledge and " + 
-					"experience. My aim is to seek a suitable position in reputed Organization to " + 
-					"enhance and utilize my knowledge and skills in order to cope with the " + 
-					"challenges of the industry. " + 
-					"EXPERIENCE " + 
-					" " + 
-					" " + 
-					"FRONT END WEB DEVELOPER " + 
-					"MISTIQUBE / MAY 2020 – August 2020 " + 
-					"• Worked as a web developer and used Html, CSS and Bootstrap to " + 
-					"work on organization’s website. " + 
-					"• Designed forms, pages and completed every task given to me by " + 
-					"senior developers. " + 
-					"   Email Marketing and Campaign Management " + 
-					"FIVERR / March 2019 – 2021 " + 
-					"• Worked in the field of Email Marketing and Campaigns " + 
-					"Management on fiverr. I am almost level 2 seller and still going, " + 
-					"providing my services to different organizations. Overall, I have 5-" + 
-					"star ratings from more than 100 international buyers. " + 
-					"• Used Mailchimp, Klaviyo, Send in Blue, Constant Contact, Active " + 
-					"Campaign, and other email marketing tools for my work. " + 
-					"• Working in the field for 3 years know I have great knowledge " + 
-					"about the Digital Marketing, SEO and how to run campaigns " + 
-					"and make Email Templates. It is one my strongest area to " + 
-					"work. " + 
-					"• My main goal has always been the satisfaction of my clients. " + 
-					"You can visit my profile to have a look at my work. " + 
-					"Link: https://www.fiverr.com/users/web_dvlpr/seller_dashboard " + 
-					"Username: Web_Dvlr" + 
-					"                                                             SOCIAL MEDIA CONTENT CREATION " + 
-					"MULTIINSIGHT / January 2021 – March 2021 " + 
-					"• Did my internship in Graphic designing and social media content " + 
-					"creation at MultiInsight, Islamabad " + 
-					"• I do have the certificate and the heads of this organization were " + 
-					"very happy with my performance. " + 
-					" " + 
-					"CERTIFICATIONS " + 
-					" " + 
-					"Gold Medal " + 
-					"For scoring good " + 
-					"marks in matric " + 
-					"Silver Medal " + 
-					"For scoring good " + 
-					"marks in FSC " + 
-					"Photoshop Certificate " + 
-					"For attending photoshop " + 
-					"workshop in university " + 
-					"Certificate of Appreciation " + 
-					"Organizer and Manager of " + 
-					"university event - TECHSALVO " + 
-					" Scholarship Certificates " + 
-					"5th, 8th, matric and " + 
-					"FSc scholarships " + 
-					"QUIZ Competition Certificate " + 
-					"College level winner  " + 
-					"Presentation Competition " + 
-					"Certificate " + 
-					"College level winner " + 
-					"Speech Competition " + 
-					"Certificate " + 
-					"College level winner " + 
-					"  Graphics Training Certificate " + 
-					"DigiSkillls (Virtual University) " + 
-					"Creative Writing Certificate " + 
-					"DigiSkillls (Virtual University) " + 
-					"Freelancing Certificate " + 
-					"DigiSkillls (Virtual University) " + 
-					"Html-CSS Certificate " + 
-					"Udemy " + 
-					" " + 
-					"SOFTWARES " + 
-					" " + 
-					" " + 
-					"Android Studio " + 
-					"Visual Studio " + 
-					"Adobe Tools " + 
-					"Star UML " + 
-					"Eclipse " + 
-					"Brackets " + 
-					"FLUTTER DEVELOPER " + 
-					"• Did online work as a frontend app developer creating many " + 
-					"projects and learning at the same time. Used flutter to work on " + 
-					"developing my Final Year Project.  " + 
-					"• Made Android and IOS app of FYP. " + 
-					"• Designed certain screens and did changings " + 
-					"regarding modifications in the GUI of existing app. " + 
-					" " + 
-					"EDUCATION " + 
-					"   " + 
-					"BS (Hons.) Software Engineering Oct 2017 – July 2021  " + 
-					"UNIVERSITY OF ENGINEERING AND TECHNOLOGY, TAXILA, PAKISTAN " + 
-					"CGPA: 3.21 / 4.00 (81%)  " + 
-					"Specialized in Email Marketing, Front End web development,UI/UX " + 
-					"development with knowledge of desktop application development. " + 
-					"Actively participated in team projects to create real-world applications. " + 
-					"Served as an active member for development of final year project of a " + 
-					"Crowd Funding Platform web and mobile application. Acted as IT Head of " + 
-					"a society named SoftDesk from 2020 to 2021.  " + 
-					"Intermediate (Pre-Engineering) Sept 2015 – Sept 2017  " + 
-					"SUPERIOR COLLEGE FOR GIRLS, GUJAR KHAN, PAKISTAN " + 
-					"Marks: 963 / 1100 (87.54%)  " + 
-					"Studies focused in engineering subjects such as Mathematics, Algebra, " + 
-					"Physics and Chemistry. Learned basic concepts and applied these " + 
-					"concepts to practical issues.  " + 
-					"Matriculation (Science) Apr 2013 – July 2015 " + 
-					" Army Public School and College (APSACS), MULTAN, PAKISTAN " + 
-					"Marks: 933 / 1100 (89%)  " + 
-					"Studies focused in Science subjects such as Mathematics, Physics, " + 
-					"Chemistry and Biology. Learned basic concepts and their real-life " + 
-					"applications.  " + 
-					"FINAL YEAR PROJECT " + 
-					"   " + 
-					"FUNDPAK (Pakistan’s First Crowd Funding App) " + 
-					"Android, IOS & WEB App " + 
-					"• Developed an application using flutter and firebase for the " + 
-					"entrepreneurs and small businesspersons. " + 
-					"• This project is initialized to help people to engulf the bridge " + 
-					"b/w entrepreneurs and the investors of Pakistan. " + 
-					"• Followed agile devlp life cycle and perform all testing  ";
-        String str = "javA";
-//        String pattern = "(?<=_|\\b)" + str + "(?=_|\\b)";
-//        if (Pattern.compile(pattern).matcher(text).find()) {
-//            System.out.println("found");
-//        }
+        String text = "MUHAMMAD HUSNAIN ABBAS Electrical Engineer (Electronics & Communication) To work in an Organization that offers a creative, dynamic and professional environment, where there ismaximum chance of learning and grow as a proficient, innovative and committed person. mhusnainabbas2@gmail.com +92 307 6557305 Thanda Pani, Lehtrar Road NiloreIslamabad, Pakistan 27 October, 1997 linkedin.com/in/m-husnain-abbas-248634171 github.com/mhusnainee stackoverflow.com/users/16451924/m-husnain-abbas SKILLS Matlab Simulink Microsoft Office DevC++ Python Linux Keil uVision Power World Simulator Proteus & Multisim Electric devices Repairing LANGUAGES English Full Professional Proficiency Urdu Native or Bilingual Proficiency Punjabi Native or Bilingual Proficiency INTERESTS Cyber Security Circuit Designing Programming EDUCATION B.Sc. Electrical Engineering University of Engineering and Technology Lahore, Faisalabad Campus 10/2017 - 07/2021,  3.38/4, 84.60 Percent F.Sc. Pre-Engineering Government Post Graduate College Sheikhupura (BISE Lahore) 09/2015 - 05/2017,  883/1100, 80.27 Percent Matriculation Govt. Rashid Minhas Higher Secondary School, HFD (BISE Gujranwala) 04/2013 - 03/2015,  951/1100, 86.45 Percent WORK EXPERIENCE Accurate Pvt. Ltd, Sundar Industial Estate Lahore (11/2021 - 01/2022) Jr. Engineer in Research and Development Department Arista Solar, Sunrise Arcade DHA 2 Islamabad (10/2021 - 11/2021) Trainee Engineer CERTIFICATES Python for Beginners, Sololearn (11/2021 - 12/2021) PERSONAL PROJECTS IOT Based Power Management Unit for Smart Distribution and Consumption (FYP) (03/2020 - 07/2021) IOT based power management unit is for smart distribution and consumption of power within nodes. This project is forremote areas, where there is no AC supply. It is the prototype of DC Smart Grid System. First Person View Quadcopter (08/2019 - 01/2020) FPV quadcopter is used for surveillance and security purposes. Flight controller used is KK2.1.5 and frame used isDJIF450. Digital Clock (05/2019 - 06/2019) This digital clock is based on 8-bit microcontroller, PIC16F84A. The digital displays used are 7 segment displays whichwere made of LEDs. DC Voltmeter (08/2018 - 11/2018) This DC voltmeter can measure DC voltages up to 999 volts. This voltmeter is based on an analog to digital converter,ICL7107CPL. MPPT using P&O and ANN (06/2019 - 02/2020) Maximum power point tracking is used to track the maximum power point of Solar panels and Wind turbines. Thisproject is based on Simulation of MPPT using Perturb and Observe and Artificial neural network Techniques. Comparison of 4G and 5G Technologies (08/2020 - 12/2020) It is a review project. The two technologies were reviewed through a brief comparison between them. CURRICULAR ACTIVITIES, INDUSTRIAL EXPOSURE 1. PLC workshop, Fast Chiniot, Faisalabad (08/2020) 2. CPD Python workshop UET FSD (03/2019) Industrial Visit (11/2019) Fazal Steel Limited , Islamabad Study Tour (12/2018) 500 KV Gatti Grid Station, Faisalabad ";
 
+        String str = "communicATioN";
+        String REGEX_FIND_WORD = "(?i).*?\\b%s\\b.*?";
+        String regex = String.format(REGEX_FIND_WORD, Pattern.quote(str));
+        System.out.println(text.matches(regex));
+        
 //        System.out.println(Pattern.compile(Pattern.quote("java".rep), Pattern.CASE_INSENSITIVE).matcher(text).find());
 //        if (Pattern.compile("").matcher(text).find()) {
 //            System.out.println("found");
 //        }
-       
+//        System.out.println(containsWord(text, str));
+//        Map<String, Boolean> map = new HashMap();
+//        map.put("java", true);
+//        map.put("docker", true);
+//        map.put("android", false);
+////        for (Map.Entry entry : map.entrySet()) {
+//            System.out.println(entry.getKey() + "/" + entry.getValue());
+//            if (entry.getKey().equals("java")) {
+//                entry.setValue(true);
+//            }
+//        }
+//        map.put("android", Boolean.TRUE);
+//        System.out.println(map);
+//        System.out.println(getFlag(map));
 
-        System.out.println(containsWord(text, str));
+//        List<String> resultKeys = map.entrySet().stream().filter(Map.Entry::getValue).map(Map.Entry::getKey).collect(Collectors.toList());
+//        System.out.println(resultKeys);
+//        Collections.sort(resultKeys);
+//        System.out.println(String.join("-", resultKeys));
+//        String strr = "docker-flutter-java";
+//        String arrs[] = strr.split("-");
+//        System.out.println(Arrays.toString(arrs));
+    }
+
+    public static boolean getFlag(Map<String, Boolean> map) {
+        for (Map.Entry entry : map.entrySet()) {
+            if (Boolean.FALSE.equals(entry.getValue())) {
+                return false;
+            }
+
+        }
+
+        return true;
     }
 
     public static String REGEX_FIND_WORD = "(?i).*?\\b%s\\b.*?";

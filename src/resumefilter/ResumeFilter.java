@@ -1,8 +1,7 @@
 package resumefilter;
 
-import java.io.File;
-import java.util.Arrays;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 /**
  *
@@ -12,7 +11,12 @@ public class ResumeFilter {
 
     public static void main(String[] args) {
         try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
             new Filter().setVisible(true);
 
 //            String st[] = {"JAVA", "cSharp", "HTML"};
@@ -25,7 +29,6 @@ public class ResumeFilter {
 //                directory.mkdir();
 //                System.out.println("created");
 //            }
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
